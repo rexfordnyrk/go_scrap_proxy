@@ -28,18 +28,8 @@ func ScrapeWithSelenium() {
 	}
 	defer service.Stop()
 
-	// Define proxy settings
-	proxy := selenium.Proxy{
-		Type: selenium.Manual,
-		HTTP: "127.0.0.1:3128", // Replace with your proxy settings
-		SSL:  "127.0.0.1:3128", // Replace with your proxy settings
-	}
-
 	// Connect to the WebDriver instance
-	caps := selenium.Capabilities{
-		"browserName": "chrome",
-		"proxy":       proxy,
-	}
+	caps := selenium.Capabilities{"browserName": "chrome"}
 	caps.AddChrome(chrome.Capabilities{Args: []string{
 		"--headless", // comment out this line for testing
 	}})
@@ -55,48 +45,51 @@ func ScrapeWithSelenium() {
 		log.Fatalf("Error getting page: %v", err)
 	}
 
-	// Find and process articles
+	// Find articles using the specified css selector
 	articles, err := wd.FindElements(selenium.ByCSSSelector, ".section-blog article")
 	if err != nil {
 		log.Fatalf("Error finding articles: %v", err)
 	}
 
+	//For each article found, extract the details
 	for i, article := range articles {
 		articleData := map[string]string{}
 
+		// Grab the title element
 		title, err := article.FindElement(selenium.ByCSSSelector, "div .post-card__title a")
 		if err != nil {
 			log.Printf("Error finding title: %v", err)
 			continue
 		}
-
+		//extract title text from element
 		if articleData["title"], err = title.Text(); err != nil {
 			log.Printf("Error getting title text: %v", err)
 			continue
 		}
-
+		// Grab the excerpt element
 		excerpt, err := article.FindElement(selenium.ByCSSSelector, "div .post-card__excerpt")
 		if err != nil {
 			log.Printf("Error finding excerpt: %v", err)
 			continue
 		}
-
+		//extract excerpt text from element
 		if articleData["excerpt"], err = excerpt.Text(); err != nil {
 			log.Printf("Error getting excerpt text: %v", err)
 			continue
 		}
-
+		// Grab the category element
 		category, err := article.FindElement(selenium.ByCSSSelector, "div .post-card__tag")
 		if err != nil {
 			log.Printf("Error finding category: %v", err)
 			continue
 		}
 
+		//extract text from the category element
 		if articleData["categoryText"], err = category.Text(); err != nil {
 			log.Printf("Error getting category text: %v", err)
 			continue
 		}
-
+		//convert this data into json
 		jsonData, err := json.Marshal(articleData)
 		if err != nil {
 			log.Fatal(err)

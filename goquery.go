@@ -6,34 +6,18 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
 func main() {
 	ScrapeWithGOquery()
 }
+
 func ScrapeWithGOquery() {
-	// Define the URL of the proxy server
-	proxyStr := "http://127.0.0.1:3128"
 
-	// Parse the proxy URL
-	proxyURL, err := url.Parse(proxyStr)
-	if err != nil {
-		fmt.Println("Error parsing proxy URL:", err)
-		return
-	}
-
-	//Create an http.Transport that uses the proxy
-	transport := &http.Transport{
-		Proxy: http.ProxyURL(proxyURL),
-	}
-
-	// Create an HTTP client with the transport
-	client := &http.Client{
-		Transport: transport,
-	}
-	// Make the HTTP GET request
+	// Create an HTTP client
+	client := &http.Client{}
+	// Make the HTTP GET request to the page
 	res, err := client.Get("https://itsfoss.com")
 	if err != nil {
 		fmt.Println("Error making request:", err)
@@ -41,28 +25,25 @@ func ScrapeWithGOquery() {
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != 200 {
-		log.Fatalf("status code error: %d %s", res.StatusCode, res.Status)
-	}
-
-	// Load the HTML document
+	// Load the HTML document from the request response into Goquery
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	//For each article found using the specified selector, loop though and extract the details
 	doc.Find(".section-blog article").Each(func(i int, s *goquery.Selection) {
 		article := map[string]string{}
-		// For each item found, get the title
+		// Get the title
 		article["title"] = s.Find("div .post-card__title a").Text()
-		//fmt.Printf("Title: %s\n", title)
 
-		// For each item found, get the excerpt
+		// Get the excerpt
 		article["excerpt"] = strings.Trim(s.Find("div .post-card__excerpt").Text(), "\n")
 
-		// For each item found, get the category
+		// Get the blog category
 		article["category"] = s.Find("div .post-card__tag").Text()
 
+		//convert this data into json
 		jsonData, err := json.Marshal(article)
 		if err != nil {
 			log.Fatal(err)

@@ -6,8 +6,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly"
 	"log"
-	"net/http"
-	"net/url"
 	"strings"
 )
 
@@ -16,39 +14,25 @@ func main() {
 }
 
 func ScrapeWithColly() {
-	// Define the URL of the proxy server
-	proxyStr := "http://127.0.0.1:3128"
-
-	// Parse the proxy URL
-	proxyURL, err := url.Parse(proxyStr)
-	if err != nil {
-		fmt.Println("Error parsing proxy URL:", err)
-		return
-	}
-
-	//Create an http.Transport that uses the proxy
-	transport := &http.Transport{
-		Proxy: http.ProxyURL(proxyURL),
-	}
-
+	//Initialize a new colly collector
 	c := colly.NewCollector()
 
-	c.WithTransport(transport)
-	// Find and visit all links
+	// Once HTML is loaded, grab the body and search though for the section with articles
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		doc := e.DOM
+		//For each article found using the specified selector, loop though and extract the details
 		doc.Find(".section-blog article").Each(func(i int, s *goquery.Selection) {
 			article := map[string]string{}
-			// For each item found, get the title
+			// Get the title
 			article["title"] = s.Find("div .post-card__title a").Text()
-			//fmt.Printf("Title: %s\n", title)
 
-			// For each item found, get the excerpt
+			// Get the excerpt
 			article["excerpt"] = strings.Trim(s.Find("div .post-card__excerpt").Text(), "\n")
 
-			// For each item found, get the category
+			// Get the blog category
 			article["category"] = s.Find("div .post-card__tag").Text()
 
+			//convert this data into json
 			jsonData, err := json.Marshal(article)
 			if err != nil {
 				log.Fatal(err)
@@ -58,6 +42,7 @@ func ScrapeWithColly() {
 		})
 	})
 
+	//Visit this URL and execute the above instruction on it
 	if err := c.Visit("https://itsfoss.com"); err != nil {
 		log.Fatal(err)
 	}
