@@ -6,14 +6,34 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
 func main() {
-	ScrapeWithGOquery()
+	ScrapeWithGoquery()
 }
 
-func ScrapeWithGOquery() {
+func ScrapeWithGoquery() {
+	// Define the URL of the proxy server
+	proxyStr := "http://127.0.0.1:3128"
+
+	// Parse the proxy URL
+	proxyURL, err := url.Parse(proxyStr)
+	if err != nil {
+		fmt.Println("Error parsing proxy URL:", err)
+		return
+	}
+
+	//Create an http.Transport that uses the proxy
+	transport := &http.Transport{
+		Proxy: http.ProxyURL(proxyURL),
+	}
+
+	// Create an HTTP client with the transport
+	client := &http.Client{
+		Transport: transport,
+	}
 
 	// Create an HTTP client
 	client := &http.Client{}

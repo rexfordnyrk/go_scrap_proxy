@@ -17,6 +17,13 @@ func ScrapeWithColly() {
 	//Initialize a new colly collector
 	c := colly.NewCollector()
 
+	// Define the URL of the proxy server
+	proxyStr := "http://127.0.0.1:3128"
+	// SetProxy sets a proxy for the collector
+	if err := c.SetProxy(proxyStr); err != nil {
+		log.Fatalf("Error setting proxy configuration: %v", err)
+	}
+
 	// Once HTML is loaded, grab the body and search though for the section with articles
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		doc := e.DOM

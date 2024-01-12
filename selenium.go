@@ -28,8 +28,18 @@ func ScrapeWithSelenium() {
 	}
 	defer service.Stop()
 
-	// Configuring the WebDriver instance
-	caps := selenium.Capabilities{"browserName": "chrome"}
+	// Define proxy settings
+	proxy := selenium.Proxy{
+		Type: selenium.Manual,
+		HTTP: "127.0.0.1:3128", // Replace with your proxy settings
+		SSL:  "127.0.0.1:3128", // Replace with your proxy settings
+	}
+
+	// Configuring the WebDriver instance with the proxy
+	caps := selenium.Capabilities{
+		"browserName": "chrome",
+		"proxy":       proxy,
+	}
 	caps.AddChrome(chrome.Capabilities{Args: []string{
 		"--headless", // Start browser without UI as a background process
 	}})
