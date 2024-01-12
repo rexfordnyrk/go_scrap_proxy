@@ -28,12 +28,13 @@ func ScrapeWithSelenium() {
 	}
 	defer service.Stop()
 
-	// Connect to the WebDriver instance
+	// Configuring the WebDriver instance
 	caps := selenium.Capabilities{"browserName": "chrome"}
 	caps.AddChrome(chrome.Capabilities{Args: []string{
-		"--headless", // comment out this line for testing
+		"--headless", // Start browser without UI as a background process
 	}})
 
+	// Connect to the WebDriver instance
 	wd, err := selenium.NewRemote(caps, "")
 	if err != nil {
 		log.Fatalf("Error connecting to the WebDriver: %v", err)
