@@ -17,6 +17,7 @@ func ScrapeWithGOquery() {
 
 	// Create an HTTP client
 	client := &http.Client{}
+
 	// Make the HTTP GET request to the page
 	res, err := client.Get("https://itsfoss.com")
 	if err != nil {
@@ -51,4 +52,13 @@ func ScrapeWithGOquery() {
 		// Print article details as Json Object
 		fmt.Printf("Article %d: %v\n", i, string(jsonData))
 	})
+
+	// Visit the Lumtest.com to check your current IP information
+	if res, err := client.Get("https://lumtest.com/myip.json"); err == nil {
+		var j interface{}
+		err = json.NewDecoder(res.Body).Decode(&j)
+		fmt.Printf("Check Proxy IP %v\n", j)
+	} else {
+		log.Fatal(err)
+	}
 }

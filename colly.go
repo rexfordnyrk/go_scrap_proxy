@@ -46,4 +46,16 @@ func ScrapeWithColly() {
 	if err := c.Visit("https://itsfoss.com"); err != nil {
 		log.Fatal(err)
 	}
+
+	// Visit the Lumtest.com to check your current IP information
+	c.OnResponse(func(response *colly.Response) {
+		if "https://lumtest.com/myip.json" == response.Request.URL.String() {
+			var j interface{}
+			_ = json.Unmarshal(response.Body, &j)
+			fmt.Printf("Check Proxy IP %v\n", j)
+		}
+	})
+	if err := c.Visit("https://lumtest.com/myip.json"); err != nil {
+		log.Fatal(err)
+	}
 }
