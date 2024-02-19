@@ -35,9 +35,6 @@ func ScrapeWithGoquery() {
 		Transport: transport,
 	}
 
-	// Create an HTTP client
-	client := &http.Client{}
-
 	// Make the HTTP GET request to the page
 	res, err := client.Get("https://itsfoss.com")
 	if err != nil {

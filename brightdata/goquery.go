@@ -78,4 +78,13 @@ func ScrapeWithGoquery() {
 		// Print article details as Json Object
 		fmt.Printf("Article %d: %v\n", i, string(jsonData))
 	})
+
+	// Visit the Lumtest.com to check your current IP information
+	if res, err := client.Get("https://lumtest.com/myip.json"); err == nil {
+		var j interface{}
+		err = json.NewDecoder(res.Body).Decode(&j)
+		fmt.Printf("Check Proxy IP %v\n", j)
+	} else {
+		log.Fatal(err)
+	}
 }

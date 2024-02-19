@@ -118,4 +118,15 @@ func ScrapeWithSelenium() {
 		// Print article details as Json Object
 		fmt.Printf("Article %d: %v\n", i, string(jsonData))
 	}
+
+	// Visit the Lumtest.com to check your current IP information
+	if err := wd.Get("https://lumtest.com/myip.json"); err != nil {
+		log.Fatalf("Error getting page: %v", err)
+	}
+	if source, err := wd.FindElement(selenium.ByTagName, "pre"); err == nil {
+		text, _ := source.Text()
+		fmt.Printf("Check Proxy IP %v\n", text)
+	} else {
+		return
+	}
 }
