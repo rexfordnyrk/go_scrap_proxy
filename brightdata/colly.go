@@ -78,7 +78,7 @@ func ScrapeWithColly() {
 		if "https://lumtest.com/myip.json" == response.Request.URL.String() {
 			var j interface{}
 			_ = json.Unmarshal(response.Body, &j)
-			fmt.Printf("Check Proxy IP %v\n", j)
+			fmt.Printf("\nCheck Proxy IP %v\n", j)
 		}
 	})
 	if err := c.Visit("https://lumtest.com/myip.json"); err != nil {

@@ -125,7 +125,7 @@ func ScrapeWithSelenium() {
 	}
 	if source, err := wd.FindElement(selenium.ByTagName, "pre"); err == nil {
 		text, _ := source.Text()
-		fmt.Printf("Check Proxy IP %v\n", text)
+		fmt.Printf("\nCheck Proxy IP %v\n", text)
 	} else {
 		return
 	}

@@ -83,7 +83,7 @@ func ScrapeWithGoquery() {
 	if res, err := client.Get("https://lumtest.com/myip.json"); err == nil {
 		var j interface{}
 		err = json.NewDecoder(res.Body).Decode(&j)
-		fmt.Printf("Check Proxy IP %v\n", j)
+		fmt.Printf("\nCheck Proxy IP %v\n", j)
 	} else {
 		log.Fatal(err)
 	}
