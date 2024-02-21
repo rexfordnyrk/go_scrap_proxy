@@ -41,7 +41,7 @@ func ScrapeWithSelenium() {
 		"proxy":       proxy,
 	}
 	caps.AddChrome(chrome.Capabilities{Args: []string{
-		"--headless", // Start browser without UI as a background process
+		"--headless=new", // Start browser without UI as a background process
 	}})
 
 	// Connect to the WebDriver instance

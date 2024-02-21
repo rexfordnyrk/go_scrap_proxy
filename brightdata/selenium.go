@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/rexfordnyrk/proxyauth"
 	"github.com/tebeka/selenium"
 	"github.com/tebeka/selenium/chrome"
 	"log"
@@ -30,10 +31,10 @@ func ScrapeWithSelenium() {
 	defer service.Stop()
 
 	// Define the proxy server with username and password
-	proxyUsername := "username"      //Your residential proxy username
-	proxyPassword := "your_password" //Your Residential Proxy password here
-	proxyHost := "server_host"       //Your Residential Proxy Host
-	proxyPort := "server_port"       //Your Port here
+	proxyUsername := "brd-customer-hl_264b448a-zone-mobile" //Your residential proxy username
+	proxyPassword := "itsj3pgzs12l"                         //Your Residential Proxy password here
+	proxyHost := "brd.superproxy.io"                        //Your Residential Proxy Host
+	proxyPort := "22225"                                    //Your Port here
 
 	proxyStr := fmt.Sprintf("http://%s:%s@%s:%s", url.QueryEscape(proxyUsername), url.QueryEscape(proxyPassword), proxyHost, proxyPort)
 
@@ -49,10 +50,18 @@ func ScrapeWithSelenium() {
 		"browserName": "chrome",
 		"proxy":       proxy,
 	}
-	caps.AddChrome(chrome.Capabilities{Args: []string{
-		"--headless",                  // Start browser without UI as a background process
+
+	chromeCaps := chrome.Capabilities{Args: []string{
+		"--headless=new",              // Start browser without UI as a background process
 		"--ignore-certificate-errors", // // Disable SSL certificate verification
-	}})
+	}}
+
+	extension, err := proxyauth.BuildExtention(proxyHost, proxyPort, proxyUsername, proxyPassword)
+	if err != nil {
+		log.Fatal("BuildProxyExtension Error:", err)
+	}
+	chromeCaps.AddExtension(extension)
+	caps.AddChrome(chromeCaps)
 
 	// Connect to the WebDriver instance
 	wd, err := selenium.NewRemote(caps, "")
@@ -123,10 +132,11 @@ func ScrapeWithSelenium() {
 	if err := wd.Get("https://lumtest.com/myip.json"); err != nil {
 		log.Fatalf("Error getting page: %v", err)
 	}
+	//if source, err := wd.FindElement(selenium.ByTagName, "pre"); err == nil {
 	if source, err := wd.FindElement(selenium.ByTagName, "pre"); err == nil {
 		text, _ := source.Text()
 		fmt.Printf("\nCheck Proxy IP %v\n", text)
 	} else {
-		return
+		log.Fatal(err)
 	}
 }

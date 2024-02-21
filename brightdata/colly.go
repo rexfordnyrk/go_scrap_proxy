@@ -31,10 +31,10 @@ func ScrapeWithColly() {
 	c.WithTransport(transport)
 
 	// Define the proxy server with username and password
-	proxyUsername := "username"      //Your residential proxy username
-	proxyPassword := "your_password" //Your Residential Proxy password here
-	proxyHost := "server_host"       //Your Residential Proxy Host
-	proxyPort := "server_port"       //Your Port here
+	proxyUsername := "brd-customer-hl_264b448a-zone-mobile" //Your residential proxy username
+	proxyPassword := "itsj3pgzs12l"                         //Your Residential Proxy password here
+	proxyHost := "brd.superproxy.io"                        //Your Residential Proxy Host
+	proxyPort := "22225"                                    //Your Port here
 
 	proxyStr := fmt.Sprintf("http://%s:%s@%s:%s", url.QueryEscape(proxyUsername), url.QueryEscape(proxyPassword), proxyHost, proxyPort)
 

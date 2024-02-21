@@ -59,6 +59,16 @@ github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1
 github.com/kennygrant/sanitize v1.2.4 h1:gN25/otpP5vAsO2djbMhF/LQX6R7+O1TB4yv8NzpJ3o=
 github.com/kennygrant/sanitize v1.2.4/go.mod h1:LGsjYYtgxbetdg5owWB2mpgUL6e2nfw2eObZ0u0qvak=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220122200-ee4a9e0dba04 h1:enF9YMWZLZEH/+ekiyoFMq5U+b4jfxduyIMIHGFdSvM=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220122200-ee4a9e0dba04/go.mod h1:PQh82QBnNyH3C3qGqgWfLZXsyz5Uwkb5CSxodtiNkkc=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220123412-8cf55f0c294a h1:qDDSKzw+3i8301KS32K3z6FgVtkMongk4/lDs2MuFvM=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220123412-8cf55f0c294a/go.mod h1:PQh82QBnNyH3C3qGqgWfLZXsyz5Uwkb5CSxodtiNkkc=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220123636-755da16d03fc h1:WRL2fJujZdVd1+WcoVFSEBSVB3VqVIEe2Lz4dfMbX28=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220123636-755da16d03fc/go.mod h1:PQh82QBnNyH3C3qGqgWfLZXsyz5Uwkb5CSxodtiNkkc=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220192033-6e7e10e1c489 h1:BBZTEgo30E45YAjpHyW7RNsem+cv1GH7fKL0ipVtTuQ=
+github.com/rexfordnyrk/chromeproxyauth v0.0.0-20240220192033-6e7e10e1c489/go.mod h1:PQh82QBnNyH3C3qGqgWfLZXsyz5Uwkb5CSxodtiNkkc=
+github.com/rexfordnyrk/proxyauth v0.0.0-20240221125155-58b2e78df65e h1:NGkFMhv+J1exvG6MdJfasjvgi64v0WFcoIIyz6Wtfxo=
+github.com/rexfordnyrk/proxyauth v0.0.0-20240221125155-58b2e78df65e/go.mod h1:NIAqJERXfFe56wRxp/ukxjrasp35mvHWF09tHZKwTB8=
 github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d h1:hrujxIzL1woJ7AwssoOcM/tq5JjjG2yYOc8odClEiXA=
 github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d/go.mod h1:uugorj2VCxiV1x+LzaIdVa9b4S4qGAcH6cbhh4qVxOU=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
