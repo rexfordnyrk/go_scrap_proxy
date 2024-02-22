@@ -51,16 +51,24 @@ func ScrapeWithSelenium() {
 		"proxy":       proxy,
 	}
 
+	//defining the capabilities or option for the chrome webdriver
 	chromeCaps := chrome.Capabilities{Args: []string{
 		"--headless=new",              // Start browser without UI as a background process
 		"--ignore-certificate-errors", // // Disable SSL certificate verification
 	}}
 
+	//Building proxy auth extension using BrightData Proxy credentials
 	extension, err := proxyauth.BuildExtention(proxyHost, proxyPort, proxyUsername, proxyPassword)
 	if err != nil {
 		log.Fatal("BuildProxyExtension Error:", err)
 	}
-	chromeCaps.AddExtension(extension)
+
+	//including the extension to allow proxy authentication in chrome
+	if err := chromeCaps.AddExtension(extension); err != nil {
+		log.Fatal("Error adding Extension:", err)
+	}
+
+	//adding chrome options to selenium
 	caps.AddChrome(chromeCaps)
 
 	// Connect to the WebDriver instance
