@@ -30,9 +30,14 @@ func ScrapeWithSelenium() {
 
 	// Configuring the WebDriver instance
 	caps := selenium.Capabilities{"browserName": "chrome"}
-	caps.AddChrome(chrome.Capabilities{Args: []string{
-		"--headless", // Start browser without UI as a background process
-	}})
+
+	//defining the capabilities or option for the chrome webdriver
+	chromeCaps := chrome.Capabilities{Args: []string{
+		"--headless=new", // Start browser without UI as a background process
+	}}
+
+	//adding chrome options to selenium
+	caps.AddChrome(chromeCaps)
 
 	// Connect to the WebDriver instance
 	wd, err := selenium.NewRemote(caps, "")
